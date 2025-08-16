@@ -391,7 +391,81 @@
             font-size: 1.05rem;
         }
 
-        .action-buttons {
+        /* TV Show Episodes Section */
+        .episodes-section {
+            margin-top: 40px;
+        }
+
+        .season-title {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .season-title i {
+            font-size: 1.4rem;
+        }
+
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .episode-card {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 255, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .episode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 255, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        .episode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+        }
+
+        .episode-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(0, 255, 0, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .episode-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light);
+            flex-grow: 1;
+            padding-left: 15px;
+        }
+
+        .episode-description {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .episode-actions {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
@@ -458,32 +532,30 @@
             border-radius: 12px;
         }
 
-        .quality-selector {
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .quality-btn {
+        .back-btn {
             background: rgba(0, 255, 0, 0.1);
             color: var(--primary);
             border: 2px solid var(--primary);
-            padding: 10px 20px;
-            margin: 0 8px;
-            border-radius: 8px;
+            padding: 12px 25px;
+            border-radius: 30px;
             cursor: pointer;
+            margin-bottom: 25px;
             transition: all 0.3s;
             font-weight: 600;
             font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
         }
 
-        .quality-btn:hover {
-            background: rgba(0, 255, 0, 0.2);
+        .back-btn i {
+            margin-right: 8px;
         }
 
-        .quality-btn.active {
+        .back-btn:hover {
             background: var(--primary);
             color: #000;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 255, 0, 0.3);
         }
 
         /* Footer */
@@ -532,32 +604,6 @@
             font-size: 1.1rem;
         }
 
-        .back-btn {
-            background: rgba(0, 255, 0, 0.1);
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            padding: 10px 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            margin-bottom: 25px;
-            transition: all 0.3s;
-            font-weight: 600;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .back-btn i {
-            margin-right: 8px;
-        }
-
-        .back-btn:hover {
-            background: var(--primary);
-            color: #000;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 255, 0, 0.3);
-        }
-
         .footer-content p {
             margin: 8px 0;
             color: #aaa;
@@ -602,10 +648,6 @@
                 max-width: 350px;
                 margin: 0 auto;
             }
-            
-            .action-buttons {
-                justify-content: center;
-            }
         }
 
         @media (max-width: 768px) {
@@ -645,6 +687,10 @@
             
             .ad-banner img {
                 height: 70px;
+            }
+            
+            .episodes-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -770,7 +816,7 @@
             </section>
         </div>
 
-        <!-- Movie Detail Page -->
+        <!-- Movie/TV Show Detail Page -->
         <div id="movieDetail" class="movie-detail">
             <div class="container">
                 <button class="back-btn" onclick="showHomePage()"><i class="fas fa-arrow-left"></i> Back to Home</button>
@@ -784,8 +830,10 @@
                             <span class="meta-item" id="detailType"></span>
                         </div>
                         <p class="description" id="detailDescription"></p>
-                        <div class="action-buttons" id="actionButtons">
-                            <!-- Buttons will be generated dynamically -->
+                        
+                        <!-- TV Show Episodes Section -->
+                        <div class="episodes-section" id="episodesSection">
+                            <!-- Episodes will be generated here -->
                         </div>
                     </div>
                 </div>
@@ -795,13 +843,10 @@
         <!-- Stream Page -->
         <div id="streamPage" class="stream-page">
             <div class="container">
-                <button class="back-btn" onclick="showMovieDetail()"><i class="fas fa-arrow-left"></i> Back to Movie</button>
+                <button class="back-btn" onclick="showMovieDetail()"><i class="fas fa-arrow-left"></i> Back</button>
                 <h1 id="streamTitle"></h1>
-                <div class="quality-selector" id="qualitySelector">
-                    <!-- Quality buttons will be generated dynamically -->
-                </div>
                 <div class="video-container">
-                    <video id="player" controls playsinline>
+                    <video id="player" controls playsinline poster="">
                         <!-- Video source will be set dynamically -->
                     </video>
                 </div>
@@ -907,7 +952,7 @@
         function showMovieDetail(movieId) {
             currentMovie = moviesData.find(movie => movie.id == movieId);
             if (!currentMovie) {
-                console.error('Movie not found:', movieId);
+                console.error('Media not found:', movieId);
                 return;
             }
 
@@ -915,7 +960,7 @@
             document.getElementById('streamPage').style.display = 'none';
             document.getElementById('movieDetail').style.display = 'block';
 
-            // Populate movie details
+            // Populate media details
             document.getElementById('detailPoster').src = currentMovie.poster_url || 'https://via.placeholder.com/300x450/222222/cccccc?text=No+Image';
             document.getElementById('detailTitle').textContent = currentMovie.title || 'Untitled';
             document.getElementById('detailYear').textContent = currentMovie.release_date ? new Date(currentMovie.release_date).getFullYear() : 'N/A';
@@ -923,147 +968,73 @@
             document.getElementById('detailType').textContent = currentMovie.type ? currentMovie.type.toUpperCase() : 'UNKNOWN';
             document.getElementById('detailDescription').textContent = currentMovie.description || 'No description available.';
 
-            // Generate action buttons
-            const actionButtons = document.getElementById('actionButtons');
-            if (currentMovie.type === 'movie') {
-                let buttonsHTML = '';
-                
-                // Stream button
-                if (currentMovie.video_links && (currentMovie.video_links['720p'] || currentMovie.video_links['1080p'])) {
-                    buttonsHTML += `
-                        <button class="btn btn-stream" onclick="showStreamPage()">
-                            <i class="fas fa-play-circle"></i> Stream Now
-                        </button>
-                    `;
-                }
-                
-                // Download buttons
-                if (currentMovie.video_links) {
-                    if (currentMovie.video_links['720p']) {
-                        buttonsHTML += `
-                            <a href="${currentMovie.video_links['720p']}" class="btn btn-download" target="_blank">
-                                <i class="fas fa-download"></i> Download 720p
-                            </a>
-                        `;
-                    }
-                    if (currentMovie.video_links['1080p']) {
-                        buttonsHTML += `
-                            <a href="${currentMovie.video_links['1080p']}" class="btn btn-download" target="_blank">
-                                <i class="fas fa-download"></i> Download 1080p
-                            </a>
-                        `;
-                    }
-                }
-                
-                actionButtons.innerHTML = buttonsHTML || '<p style="color: #ff6b6b; grid-column: 1 / -1;">No streaming or download links available</p>';
-                
-            } else if (currentMovie.type === 'tv') {
-                // TV Show - show seasons and episodes
-                let seasonsHtml = '<div style="margin-top: 20px;"><h3 style="color: #00ff00; margin-bottom: 20px;">Seasons & Episodes:</h3>';
+            // Generate episodes section for TV shows
+            const episodesSection = document.getElementById('episodesSection');
+            if (currentMovie.type === 'tv') {
+                let episodesHTML = '';
                 
                 if (currentMovie.seasons && Object.keys(currentMovie.seasons).length > 0) {
-                    Object.keys(currentMovie.seasons).forEach(seasonKey => {
-                        const season = currentMovie.seasons[seasonKey];
-                        seasonsHtml += `
-                            <div style="margin: 20px 0; padding: 20px; background: rgba(0,255,0,0.1); border-radius: 12px; border: 1px solid rgba(0,255,0,0.3);">
-                                <h4 style="color: #00ff00; margin-bottom: 15px;">Season ${season.season_number} (${season.total_episodes} episodes)</h4>
-                                <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px;">
+                    // Sort seasons by season number
+                    const sortedSeasons = Object.values(currentMovie.seasons).sort((a, b) => a.season_number - b.season_number);
+                    
+                    sortedSeasons.forEach(season => {
+                        episodesHTML += `
+                            <div class="season">
+                                <h3 class="season-title"><i class="fas fa-tv"></i> Season ${season.season_number}</h3>
+                                <div class="episodes-grid">
                         `;
                         
-                        if (season.episodes && season.episodes.length > 0) {
-                            season.episodes.forEach(episode => {
-                                if (episode.video_720p) {
-                                    seasonsHtml += `
-                                        <button class="btn" style="padding: 10px 20px; font-size: 1rem; background: rgba(0,255,0,0.2); color: #00ff00; border: 1px solid #00ff00;" 
-                                            onclick="streamTVEpisode('${episode.video_720p}', '${currentMovie.title}', ${season.season_number}, ${episode.episode_number})">
-                                            Episode ${episode.episode_number}
-                                        </button>
-                                    `;
-                                }
-                            });
-                        } else {
-                            seasonsHtml += '<p style="color: #cccccc; font-size: 0.9rem;">No episodes available</p>';
-                        }
+                        // Sort episodes by episode number
+                        const sortedEpisodes = season.episodes.sort((a, b) => a.episode_number - b.episode_number);
                         
-                        seasonsHtml += '</div></div>';
+                        sortedEpisodes.forEach(episode => {
+                            episodesHTML += `
+                                <div class="episode-card">
+                                    <div class="episode-header">
+                                        <div class="episode-number">EP ${episode.episode_number}</div>
+                                        <div class="episode-title">${episode.title || 'Untitled'}</div>
+                                    </div>
+                                    <p class="episode-description">${episode.description || 'No description available.'}</p>
+                                    <div class="episode-actions">
+                                        <button class="btn btn-stream" onclick="streamEpisode('${episode.video_720p}', '${currentMovie.title} - S${season.season_number}E${episode.episode_number}')">
+                                            <i class="fas fa-play"></i> Stream
+                                        </button>
+                                        <a href="${episode.video_720p}" class="btn btn-download" download>
+                                            <i class="fas fa-download"></i> Download
+                                        </a>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        episodesHTML += `
+                                </div>
+                            </div>
+                        `;
                     });
                 } else {
-                    seasonsHtml += '<p style="color: #ff6b6b;">No seasons available</p>';
+                    episodesHTML = '<p style="color: #ff6b6b; text-align: center; padding: 20px;">No episodes available</p>';
                 }
                 
-                seasonsHtml += '</div>';
-                actionButtons.innerHTML = seasonsHtml;
-            }
-        }
-
-        // Show stream page
-        function showStreamPage() {
-            if (!currentMovie || currentMovie.type !== 'movie') {
-                console.error('Cannot stream: invalid movie or not a movie type');
-                return;
-            }
-
-            if (!currentMovie.video_links || Object.keys(currentMovie.video_links).length === 0) {
-                alert('No streaming links available for this movie.');
-                return;
-            }
-
-            document.getElementById('movieDetail').style.display = 'none';
-            document.getElementById('streamPage').style.display = 'block';
-            document.getElementById('streamTitle').textContent = currentMovie.title;
-
-            // Generate quality selector
-            const qualitySelector = document.getElementById('qualitySelector');
-            const qualities = Object.keys(currentMovie.video_links).filter(quality => currentMovie.video_links[quality]);
-            
-            if (qualities.length > 1) {
-                qualitySelector.innerHTML = qualities.map((quality, index) => 
-                    `<button class="quality-btn ${index === 0 ? 'active' : ''}" onclick="changeQuality('${currentMovie.video_links[quality]}', this)">${quality}</button>`
-                ).join('');
-                qualitySelector.style.display = 'block';
+                episodesSection.innerHTML = episodesHTML;
             } else {
-                qualitySelector.style.display = 'none';
+                // For movies, hide the episodes section
+                episodesSection.innerHTML = '';
             }
-
-            // Set initial video source
-            const firstQuality = qualities[0];
-            const videoElement = document.getElementById('player');
-            videoElement.src = currentMovie.video_links[firstQuality];
-            videoElement.poster = currentMovie.poster_url || '';
-            
-            // Load and play the video
-            videoElement.load();
-            player.play();
         }
 
-        // Stream TV episode
-        function streamTVEpisode(videoUrl, showTitle, season, episode) {
+        // Stream an episode
+        function streamEpisode(videoUrl, title) {
             document.getElementById('movieDetail').style.display = 'none';
             document.getElementById('streamPage').style.display = 'block';
-            document.getElementById('streamTitle').textContent = `${showTitle} - S${season}E${episode}`;
-
-            // Hide quality selector for TV shows
-            document.getElementById('qualitySelector').style.display = 'none';
+            document.getElementById('streamTitle').textContent = title;
 
             const videoElement = document.getElementById('player');
             videoElement.src = videoUrl;
-            videoElement.poster = currentMovie.poster_url || '';
             
             // Load and play the video
             videoElement.load();
             player.play();
-        }
-
-        // Change video quality
-        function changeQuality(videoUrl, buttonElement) {
-            const videoElement = document.getElementById('player');
-            videoElement.src = videoUrl;
-            videoElement.load();
-            player.play();
-
-            // Update active quality button
-            document.querySelectorAll('.quality-btn').forEach(btn => btn.classList.remove('active'));
-            buttonElement.classList.add('active');
         }
 
         // Show home page

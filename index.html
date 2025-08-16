@@ -881,6 +881,17 @@
             </section>
         </div>
 
+        <!-- Search Results Page -->
+        <div id="searchResultsPage" class="movie-detail" style="display: none;">
+            <div class="container">
+                <button class="back-btn" onclick="showHomePage()"><i class="fas fa-arrow-left"></i> Back to Home</button>
+                <h1 id="searchResultsTitle">Search Results</h1>
+                <div class="movies-grid" id="searchResultsGrid">
+                    <!-- Search results will be populated here -->
+                </div>
+            </div>
+        </div>
+
         <!-- Movie Detail Page -->
         <div id="movieDetail" class="movie-detail">
             <div class="container">
@@ -1051,7 +1062,13 @@
             `;
         }
 
-        // Show movie detail page
+        // Show movie detail page from search results
+        function showMovieDetailFromSearch() {
+            document.getElementById('searchResultsPage').style.display = 'none';
+            document.getElementById('movieDetail').style.display = 'block';
+        }
+        
+        // Modified showMovieDetail to handle back navigation
         function showMovieDetail(movieId) {
             currentMovie = allMoviesData.find(movie => movie.id == movieId);
             if (!currentMovie) {
@@ -1059,8 +1076,10 @@
                 return;
             }
 
+            // Hide all pages
             document.getElementById('homePage').style.display = 'none';
             document.getElementById('streamPage').style.display = 'none';
+            document.getElementById('searchResultsPage').style.display = 'none';
             document.getElementById('movieDetail').style.display = 'block';
 
             // Populate movie details
@@ -1196,7 +1215,10 @@
 
         // Stream TV episode
         function streamTVEpisode(videoUrl, showTitle, season, episode) {
+            // Hide all pages
             document.getElementById('movieDetail').style.display = 'none';
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('searchResultsPage').style.display = 'none';
             document.getElementById('streamPage').style.display = 'block';
             document.getElementById('streamTitle').textContent = `${showTitle} - S${season}E${episode}`;
 
@@ -1232,59 +1254,77 @@
         function showHomePage() {
             document.getElementById('movieDetail').style.display = 'none';
             document.getElementById('streamPage').style.display = 'none';
+            document.getElementById('searchResultsPage').style.display = 'none';
             document.getElementById('homePage').style.display = 'block';
+            
+            // Clear search input and show original content
+            document.getElementById('searchInput').value = '';
+            renderMovies();
             
             if (player) {
                 player.pause();
             }
         }
 
+        // Show search results page
+        function showSearchResults(query, results) {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('movieDetail').style.display = 'none';
+            document.getElementById('streamPage').style.display = 'none';
+            document.getElementById('searchResultsPage').style.display = 'block';
+            
+            // Update search results title
+            document.getElementById('searchResultsTitle').textContent = `Search Results for "${query}" (${results.length} found)`;
+            
+            // Populate search results
+            const searchResultsGrid = document.getElementById('searchResultsGrid');
+            if (results.length > 0) {
+                searchResultsGrid.innerHTML = results.map(item => createMovieCard(item)).join('');
+            } else {
+                searchResultsGrid.innerHTML = '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No results found for your search.</p>';
+            }
+        }
+
         // Setup search functionality
         function setupSearch() {
             const searchInput = document.getElementById('searchInput');
+            
+            // Handle Enter key press
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Handle input changes (real-time search suggestions could be added here)
             searchInput.addEventListener('input', (e) => {
                 const query = e.target.value.toLowerCase();
-                if (query.length < 2) {
-                    renderMovies();
-                    return;
+                if (query.length === 0) {
+                    // If search is cleared, show home page
+                    if (document.getElementById('searchResultsPage').style.display === 'block') {
+                        showHomePage();
+                    }
                 }
-
-                // Search across ALL content from database regardless of year
-                const filteredMovies = allMoviesData.filter(item => 
-                    item.title && item.title.toLowerCase().includes(query)
-                );
-
-                // Filter for latest content (2025)
-                const latestMovies = filteredMovies.filter(item => {
-                    const year = item.release_date ? new Date(item.release_date).getFullYear() : null;
-                    return item.type === 'movie' && year === 2025;
-                });
-                
-                const latestTvShows = filteredMovies.filter(item => {
-                    const year = item.release_date ? new Date(item.release_date).getFullYear() : null;
-                    return item.type === 'tv' && year === 2025;
-                });
-
-                // All content regardless of year
-                const allMovies = filteredMovies.filter(item => item.type === 'movie');
-                const allTvShows = filteredMovies.filter(item => item.type === 'tv');
-
-                document.getElementById('latestMoviesGrid').innerHTML = latestMovies.length > 0 
-                    ? latestMovies.map(movie => createMovieCard(movie)).join('')
-                    : '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No latest movies found</p>';
-
-                document.getElementById('latestTvGrid').innerHTML = latestTvShows.length > 0
-                    ? latestTvShows.map(show => createMovieCard(show)).join('')
-                    : '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No latest TV shows found</p>';
-
-                document.getElementById('allMoviesGrid').innerHTML = allMovies.length > 0
-                    ? allMovies.map(movie => createMovieCard(movie)).join('')
-                    : '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No movies found</p>';
-
-                document.getElementById('allTvGrid').innerHTML = allTvShows.length > 0
-                    ? allTvShows.map(show => createMovieCard(show)).join('')
-                    : '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No TV shows found</p>';
             });
+        }
+        
+        // Perform search and show results page
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const query = searchInput.value.toLowerCase().trim();
+            
+            if (query.length < 2) {
+                alert('Please enter at least 2 characters to search');
+                return;
+            }
+            
+            // Search across ALL content from database regardless of year
+            const searchResults = allMoviesData.filter(item => 
+                item.title && item.title.toLowerCase().includes(query)
+            );
+            
+            // Show search results page
+            showSearchResults(query, searchResults);
         }
 
         // Initialize app when DOM is loaded

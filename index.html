@@ -251,8 +251,8 @@
             font-size: 1.2rem;
         }
 
-        /* New Releases Section */
-        .new-releases {
+        /* Content Sections */
+        .content-section {
             padding: 40px 0;
             background: linear-gradient(to bottom, rgba(0,30,0,0.3), rgba(0,0,0,0));
             border-radius: 20px;
@@ -261,7 +261,7 @@
             overflow: hidden;
         }
         
-        .new-releases:before {
+        .content-section:before {
             content: '';
             position: absolute;
             top: 0;
@@ -272,49 +272,18 @@
             z-index: -1;
         }
         
-        .new-releases-title {
-            font-size: 2.5rem;
+        .section-title {
+            font-size: 2.2rem;
             color: var(--primary);
             text-shadow: 0 0 15px rgba(0,255,0,0.5);
             margin-bottom: 30px;
             display: flex;
             align-items: center;
             gap: 15px;
-        }
-        
-        .new-releases-title i {
-            font-size: 2rem;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        .new-releases-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        /* Movies Grid */
-        .movies-section {
-            padding: 60px 0;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            color: var(--primary);
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
             position: relative;
-            display: inline-block;
             padding-bottom: 10px;
         }
-
+        
         .section-title:after {
             content: '';
             position: absolute;
@@ -325,14 +294,26 @@
             background: linear-gradient(90deg, var(--primary), transparent);
             border-radius: 3px;
         }
-
-        .movies-grid {
+        
+        .section-title i {
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 25px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
+        /* Movies Grid */
         .movie-card {
             background: rgba(20, 20, 20, 0.8);
             border-radius: 12px;
@@ -438,6 +419,14 @@
             color: #ccc;
             margin-bottom: 30px;
             font-size: 1.05rem;
+        }
+
+        /* Movie Actions */
+        .movie-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
 
         /* TV Show Episodes Section */
@@ -657,6 +646,16 @@
             margin: 8px 0;
             color: #aaa;
             font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer-disclaimer {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #777;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Loading Spinner */
@@ -697,6 +696,10 @@
                 max-width: 350px;
                 margin: 0 auto;
             }
+            
+            .movie-actions, .episode-actions {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 768px) {
@@ -724,7 +727,7 @@
                 font-size: 1.1rem;
             }
 
-            .movies-grid, .new-releases-grid {
+            .content-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
                 gap: 20px;
             }
@@ -761,7 +764,7 @@
                 padding: 0 10px;
             }
 
-            .movies-grid, .new-releases-grid {
+            .content-grid {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
                 gap: 15px;
             }
@@ -796,7 +799,7 @@
                 font-size: 0.95rem;
             }
             
-            .section-title, .new-releases-title {
+            .section-title {
                 font-size: 1.8rem;
             }
         }
@@ -846,14 +849,13 @@
                 </div>
             </section>
 
-            <!-- New Releases Section -->
-            <section class="new-releases">
+            <!-- 2025 Movies Section -->
+            <section class="content-section">
                 <div class="container">
-                    <h2 class="new-releases-title">
-                        <i class="fas fa-calendar"></i> 2025 Releases
+                    <h2 class="section-title" id="movies2025">
+                        <i class="fas fa-film"></i> 2025 Movies
                     </h2>
-                    <div class="new-releases-grid" id="newReleasesGrid">
-                        <!-- New releases will be loaded here -->
+                    <div class="content-grid" id="movies2025Grid">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
@@ -861,18 +863,41 @@
                 </div>
             </section>
 
-            <!-- Movies and TV Shows Sections -->
-            <section class="movies-section">
+            <!-- 2025 TV Series Section -->
+            <section class="content-section">
                 <div class="container">
-                    <h2 class="section-title" id="movies">Featured Movies</h2>
-                    <div class="movies-grid" id="moviesGrid">
+                    <h2 class="section-title" id="tv2025">
+                        <i class="fas fa-tv"></i> 2025 TV Series
+                    </h2>
+                    <div class="content-grid" id="tv2025Grid">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
                     </div>
+                </div>
+            </section>
 
-                    <h2 class="section-title" id="tv">Popular TV Shows</h2>
-                    <div class="movies-grid" id="tvGrid">
+            <!-- All Movies Section -->
+            <section class="content-section">
+                <div class="container">
+                    <h2 class="section-title" id="movies">
+                        <i class="fas fa-film"></i> All Movies
+                    </h2>
+                    <div class="content-grid" id="moviesGrid">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- All TV Series Section -->
+            <section class="content-section">
+                <div class="container">
+                    <h2 class="section-title" id="tv">
+                        <i class="fas fa-tv"></i> All TV Series
+                    </h2>
+                    <div class="content-grid" id="tvGrid">
                         <div class="loading">
                             <div class="spinner"></div>
                         </div>
@@ -895,6 +920,11 @@
                             <span class="meta-item" id="detailType"></span>
                         </div>
                         <p class="description" id="detailDescription"></p>
+                        
+                        <!-- Movie Actions -->
+                        <div class="movie-actions" id="movieActions">
+                            <!-- Actions will be generated here -->
+                        </div>
                         
                         <!-- TV Show Episodes Section -->
                         <div class="episodes-section" id="episodesSection">
@@ -926,8 +956,10 @@
                     <a href="https://t.me/filmzi2" target="_blank"><i class="fab fa-telegram"></i> Telegram Channel</a>
                     <a href="https://chat.whatsapp.com/KNE7Dzo1eFcKDA2Q6oDfFO" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Group</a>
                 </div>
-                <p>&copy; 2024 Filmzi. All rights reserved.</p>
-                <p>Join our community for the latest updates and exclusive content!</p>
+                <p>&copy; all right reserved 2025</p>
+                <div class="footer-disclaimer">
+                    <p>All sources of this website are from third party sources. We are not responsible for any content hosted on third-party sites.</p>
+                </div>
             </div>
         </div>
     </footer>
@@ -944,7 +976,8 @@
         async function initApp() {
             try {
                 // Show loading state
-                document.getElementById('newReleasesGrid').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+                document.getElementById('movies2025Grid').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+                document.getElementById('tv2025Grid').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
                 document.getElementById('moviesGrid').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
                 document.getElementById('tvGrid').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
                 
@@ -972,7 +1005,8 @@
                 
             } catch (error) {
                 console.error('Error fetching data:', error);
-                document.getElementById('newReleasesGrid').innerHTML = '<p style="color: #ff6b6b; text-align: center; padding: 40px;">Error loading new releases. Please try again later.</p>';
+                document.getElementById('movies2025Grid').innerHTML = '<p style="color: #ff6b6b; text-align: center; padding: 40px;">Error loading 2025 movies. Please try again later.</p>';
+                document.getElementById('tv2025Grid').innerHTML = '<p style="color: #ff6b6b; text-align: center; padding: 40px;">Error loading 2025 TV shows. Please try again later.</p>';
                 document.getElementById('moviesGrid').innerHTML = '<p style="color: #ff6b6b; text-align: center; padding: 40px;">Error loading movies. Please try again later.</p>';
                 document.getElementById('tvGrid').innerHTML = '<p style="color: #ff6b6b; text-align: center; padding: 40px;">Error loading TV shows. Please try again later.</p>';
             }
@@ -980,55 +1014,70 @@
 
         // Render all content sections
         function renderContent() {
-            // Get the 2025 releases
-            const newReleases2025 = moviesData.filter(item => {
-                if (!item.release_date) return false;
+            // Filter 2025 movies
+            const movies2025 = moviesData.filter(item => {
+                if (!item.release_date || item.type !== 'movie') return false;
                 const year = new Date(item.release_date).getFullYear();
                 return year === 2025;
-            }).sort((a, b) => {
-                const dateA = new Date(a.release_date);
-                const dateB = new Date(b.release_date);
-                return dateB - dateA; // newest first
             });
             
-            renderNewReleases(newReleases2025);
+            // Filter 2025 TV shows
+            const tv2025 = moviesData.filter(item => {
+                if (!item.release_date || item.type !== 'tv') return false;
+                const year = new Date(item.release_date).getFullYear();
+                return year === 2025;
+            });
             
-            // Get movies and TV shows
-            const movies = moviesData.filter(item => item.type === 'movie');
-            const tvShows = moviesData.filter(item => item.type === 'tv');
+            // Get all movies
+            const allMovies = moviesData.filter(item => item.type === 'movie');
             
-            renderMovies(movies);
-            renderTVShows(tvShows);
+            // Get all TV shows
+            const allTV = moviesData.filter(item => item.type === 'tv');
+            
+            // Render all sections
+            renderMovies2025(movies2025);
+            renderTV2025(tv2025);
+            renderMovies(allMovies);
+            renderTV(allTV);
         }
 
-        // Render new releases section (2025 only)
-        function renderNewReleases(releases) {
-            const releasesHTML = releases.length > 0 
-                ? releases.map(item => createMovieCard(item)).join('')
-                : '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No 2025 releases available</p>';
+        // Render 2025 movies section
+        function renderMovies2025(movies) {
+            const moviesHTML = movies.length > 0 
+                ? movies.map(movie => createMovieCard(movie)).join('')
+                : '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No 2025 movies available</p>';
 
-            document.getElementById('newReleasesGrid').innerHTML = releasesHTML;
+            document.getElementById('movies2025Grid').innerHTML = moviesHTML;
         }
 
-        // Render movies section
+        // Render 2025 TV shows section
+        function renderTV2025(tvShows) {
+            const tvShowsHTML = tvShows.length > 0 
+                ? tvShows.map(show => createMovieCard(show)).join('')
+                : '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No 2025 TV shows available</p>';
+
+            document.getElementById('tv2025Grid').innerHTML = tvShowsHTML;
+        }
+
+        // Render all movies section
         function renderMovies(movies) {
             const moviesHTML = movies.length > 0 
-                ? movies.slice(0, 12).map(movie => createMovieCard(movie)).join('')
+                ? movies.map(movie => createMovieCard(movie)).join('')
                 : '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No movies available</p>';
 
             document.getElementById('moviesGrid').innerHTML = moviesHTML;
         }
 
-        // Render TV shows section
-        function renderTVShows(tvShows) {
+        // Render all TV shows section
+        function renderTV(tvShows) {
             const tvShowsHTML = tvShows.length > 0 
-                ? tvShows.slice(0, 12).map(show => createMovieCard(show)).join('')
+                ? tvShows.map(show => createMovieCard(show)).join('')
                 : '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No TV shows available</p>';
 
             document.getElementById('tvGrid').innerHTML = tvShowsHTML;
         }
 
-        // Create movie card HTML (without new badge)
+        // Create movie card HTML
         function createMovieCard(item) {
             const year = item.release_date ? new Date(item.release_date).getFullYear() : 'N/A';
             const posterUrl = item.poster_url || 'https://via.placeholder.com/200x300/222222/cccccc?text=No+Image';
@@ -1065,6 +1114,24 @@
             document.getElementById('detailLanguage').textContent = currentMovie.language || 'Unknown';
             document.getElementById('detailType').textContent = currentMovie.type ? currentMovie.type.toUpperCase() : 'UNKNOWN';
             document.getElementById('detailDescription').textContent = currentMovie.description || 'No description available.';
+
+            // Generate actions for movies
+            const movieActions = document.getElementById('movieActions');
+            if (currentMovie.type === 'movie') {
+                movieActions.innerHTML = `
+                    <button class="btn btn-stream" onclick="streamMovie('${currentMovie.video_720p}', '${currentMovie.title}')">
+                        <i class="fas fa-play"></i> Stream Now
+                    </button>
+                    <a href="${currentMovie.video_720p}" class="btn btn-download" download>
+                        <i class="fas fa-download"></i> Download 720p
+                    </a>
+                    <a href="${currentMovie.video_1080p}" class="btn btn-download" download>
+                        <i class="fas fa-download"></i> Download 1080p
+                    </a>
+                `;
+            } else {
+                movieActions.innerHTML = '';
+            }
 
             // Generate episodes section for TV shows
             const episodesSection = document.getElementById('episodesSection');
@@ -1121,6 +1188,20 @@
             }
         }
 
+        // Stream a movie
+        function streamMovie(videoUrl, title) {
+            document.getElementById('movieDetail').style.display = 'none';
+            document.getElementById('streamPage').style.display = 'block';
+            document.getElementById('streamTitle').textContent = title;
+
+            const videoElement = document.getElementById('player');
+            videoElement.src = videoUrl;
+            
+            // Load and play the video
+            videoElement.load();
+            player.play();
+        }
+
         // Stream an episode
         function streamEpisode(videoUrl, title) {
             document.getElementById('movieDetail').style.display = 'none';
@@ -1144,6 +1225,10 @@
             if (player) {
                 player.pause();
             }
+            
+            // Reset search
+            document.getElementById('searchInput').value = '';
+            renderContent();
         }
 
         // Setup search functionality
@@ -1160,16 +1245,31 @@
                     item.title && item.title.toLowerCase().includes(query)
                 );
 
-                const movies = filteredMovies.filter(item => item.type === 'movie');
-                const tvShows = filteredMovies.filter(item => item.type === 'tv');
-
-                document.getElementById('moviesGrid').innerHTML = movies.length > 0 
-                    ? movies.map(movie => createMovieCard(movie)).join('')
-                    : '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No movies found</p>';
-
-                document.getElementById('tvGrid').innerHTML = tvShows.length > 0
-                    ? tvShows.map(show => createMovieCard(show)).join('')
-                    : '<p style="color: #ff6b6b; text-align: center; padding: 40px; grid-column: 1 / -1;">No TV shows found</p>';
+                // Filter 2025 movies
+                const movies2025 = filteredMovies.filter(item => {
+                    if (!item.release_date || item.type !== 'movie') return false;
+                    const year = new Date(item.release_date).getFullYear();
+                    return year === 2025;
+                });
+                
+                // Filter 2025 TV shows
+                const tv2025 = filteredMovies.filter(item => {
+                    if (!item.release_date || item.type !== 'tv') return false;
+                    const year = new Date(item.release_date).getFullYear();
+                    return year === 2025;
+                });
+                
+                // Get all movies
+                const allMovies = filteredMovies.filter(item => item.type === 'movie');
+                
+                // Get all TV shows
+                const allTV = filteredMovies.filter(item => item.type === 'tv');
+                
+                // Render all sections with filtered results
+                renderMovies2025(movies2025);
+                renderTV2025(tv2025);
+                renderMovies(allMovies);
+                renderTV(allTV);
             });
         }
 

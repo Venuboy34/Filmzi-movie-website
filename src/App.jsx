@@ -1,11 +1,11 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import MovieDetails from './pages/MovieDetails';
-import TvDetails from './pages/TvDetails';
-import SearchResults from './pages/SearchResults';
-import NotFound from './pages/NotFound';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import Home from './pages/Home'
+import MovieDetails from './pages/MovieDetails'
+import TvDetails from './pages/TvDetails'
+import SearchResults from './pages/SearchResults'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <Footer />
       </div>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

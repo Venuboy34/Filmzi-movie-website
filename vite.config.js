@@ -3,9 +3,17 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/', // Important for Cloudflare Workers
+  base: '/',
   build: {
     outDir: 'dist',
+    emptyOutDir: true,
     assetsDir: 'assets',
-  },
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js'
+      }
+    }
+  }
 })
